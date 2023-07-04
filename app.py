@@ -9,4 +9,4 @@ if __name__ == "__main__":
 
 # Clasificar:
 # X: todo
-# Y: solo strings, mapeadas < 10
+# Y: solo strings, mapeadas < 10    
