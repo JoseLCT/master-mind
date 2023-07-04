@@ -21,12 +21,12 @@ class Window:
         self.home_panel.panel.destroy()
         self.model_selecter_panel = SelecterPanel(self.window, self)
 
-    #def open_results_panel(self, model, x_columns, y_columns):
-        #self.model_selecter_panel.panel.destroy()
-        #self.results_panel = ResultsPanel(self.window, self, 1,model, x_columns, y_columns, self.file)
+    def open_results_panel(self, type, model, x_columns, y_column, df):
+        self.model_selecter_panel.panel.pack_forget()
+        self.results_panel = ResultsPanel(self.window, self, type, model, x_columns, y_column, df)
 
     def center_window(self, window):
-        window.update_idletasks()  # Actualiza el tamaño y posición de la ventana
+        window.update_idletasks()
         width = window.winfo_width()
         height = window.winfo_height()
         x_offset = (window.winfo_screenwidth() - width) // 2
