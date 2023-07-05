@@ -42,10 +42,10 @@ class SelecterPanel:
         self.cbox_classifier = tk.Checkbutton(self.panel, text="Clasificar", bg=None, fg="black", font="none 16 bold", command=self.classifier_selected, variable=self.is_classifier)
         self.menu_classifier = tk.OptionMenu(self.panel, self.model_classifier, *models_classifier)
         # Table
-        self.table_container = tk.Frame(self.panel, bg="red")
+        self.table_container = tk.Frame(self.panel)
         # x, y
-        self.btn_x = tk.Button(self.panel, text="X", bg="blue", fg="white", font="none 16 bold", command=self.select_x)
-        self.btn_y = tk.Button(self.panel, text="Y", bg="blue", fg="white", font="none 16 bold", command=self.select_y)
+        self.btn_x = tk.Button(self.panel, text="X", command=self.select_x)
+        self.btn_y = tk.Button(self.panel, text="Y", command=self.select_y)
         self.x_columns_container = tk.Frame(self.panel, bg=None)
         self.y_columns_container = tk.Frame(self.panel, bg=None)
         # Train

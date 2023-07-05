@@ -65,6 +65,7 @@ class ResultsPanel:
         self.y_column = y_column
         self.type = type
         self.model = model
+        self.y_column_type = self.df[y_column].dtype
 
         self.inputs_value = {}
         self.panel = tk.Frame(self.window)
@@ -111,7 +112,7 @@ class ResultsPanel:
         elif type == "classifier":
             self.btnAction["text"] = "Clasificar"
         self.train_df()
-        self.show_df()
+        # self.show_df()
 
     def open_more_results(self):
         data = ""
@@ -163,8 +164,8 @@ class ResultsPanel:
         # Y
         if self.df[self.y_column].dtype == "object":
             map_values = self.map_column(self.y_column)
-            if self.type == "classifier":
-                self.y_labels = self.get_y_labels(map_values)
+            if self.type == 'classifier':
+                self.y_labels = self.set_y_labels(map_values)
             self.df[self.y_column] = self.df[self.y_column].map(map_values)
         self.df[self.y_column] = self.df[self.y_column].fillna(ceil(self.df[self.y_column].mean()))
 
@@ -177,7 +178,7 @@ class ResultsPanel:
         self.all_map_values[column_name] = map_values
         return map_values
     
-    def get_y_labels(self, map_values):
+    def set_y_labels(self, map_values):
         labels = {}
         for key in map_values:
             labels[map_values[key]] = key
@@ -234,14 +235,20 @@ class ResultsPanel:
         for model_name in models_dict:
                 model = models_dict[model_name]
                 prediction = model.predict([values])
+                prediction_value = prediction[0]
                 if self.type == "classifier":
-                    if self.model == model_name:
-                        self.lblResult["text"] = "Resultado: " + self.y_labels[prediction[0]]
-                    self.classifier_scores_and_results[model_name]["result"] = self.y_labels[prediction[0]]
+                    if self.model == model_name and self.y_column_type == "object":
+                        self.lblResult["text"] = "Resultado: " + self.y_labels[prediction_value]
+                        self.classifier_scores_and_results[model_name]["result"] = self.y_labels[prediction_value]
+                    elif self.model == model_name:
+                        self.lblResult["text"] = "Resultado: " + str(round(prediction_value, 4))
+                        self.classifier_scores_and_results[model_name]["result"] = str(round(prediction_value, 4))
+                    else :
+                        self.classifier_scores_and_results[model_name]["result"] = str(round(prediction_value, 4))
                 elif self.type == "predicted":
                     if self.model == model_name:
-                        self.lblResult["text"] = "Resultado: " + str(prediction[0])
-                    self.predicted_scores_and_results[model_name]["result"] = str(prediction[0])
+                        self.lblResult["text"] = "Resultado: " + str(round(prediction_value, 4))
+                    self.predicted_scores_and_results[model_name]["result"] = str(round(prediction_value, 4))
 
     def get_column_name(self, index):
         return self.df.columns[index]
