@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from pandastable import Table, TableModel, config
 from tkinter import filedialog
+from tkinter import messagebox
 
 import pandas as pd
 import math
@@ -95,6 +96,9 @@ class SelecterPanel:
 
     def train_model(self):
         # VERIFICAR las columnas seleccionadas
+        if len(self.x_columns) == 0 or self.y_column is None:
+            messagebox.showerror("Error", "No se han seleccionado las columnas")
+            return
         model_selected = None
         if self.type == "predicted":
             model_selected = self.model_predicted.get()

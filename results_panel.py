@@ -17,6 +17,7 @@ class ResultsPanel:
         self_window.center_window(self.window)
         self.y_labels = {}
         self.all_map_values = {}
+        self.button_result_pressed = False
 
         # Models
         self.predicted_models = {
@@ -72,8 +73,8 @@ class ResultsPanel:
         self.lblTitle = tk.Label(self.panel, text=model, bg=None, fg="black", font="none 18 bold")
 
         self.lblResult = tk.Label(self.panel, text="Resultado", bg="white", fg="black", font="none 14 bold")
-        self.btnMoreResults = tk.Button(self.panel, text="Ver más resultados", command=self.open_more_results)
-        self.lblScore = tk.Label(self.panel, text="Score", bg="white", fg="black", font="none 16 bold")
+        self.btnMoreResults = tk.Button(self.panel, text="+", command=self.open_more_results)
+        self.lblScore = tk.Label(self.panel, text="Score")
 
         # Inputs
         self.container = tk.Frame(self.panel, bg='white')
@@ -103,7 +104,7 @@ class ResultsPanel:
 
         self.lblResult.place(x=100, y=50, width=300, height=40)
         self.btnMoreResults.place(x=410, y=50, width=40, height=40)
-        self.lblScore.place(x=150, y=100, width=200, height=40)
+        self.lblScore.place(x=0, y=100, width=500, height=40)
         self.container.place(x=50, y=200, width=400, height=400)
         self.btnAction.place(x=150, y=625, width=200, height=50)
 
@@ -116,6 +117,9 @@ class ResultsPanel:
 
     def open_more_results(self):
         data = ""
+        if not self.button_result_pressed:
+            messagebox.showinfo("Resultados", "Primero debe presionar el botón de predecir o clasificar")
+            return
         if self.type == "predicted":
             for model_name in self.predicted_scores_and_results:
                 model_data = self.predicted_scores_and_results[model_name]
@@ -232,6 +236,7 @@ class ResultsPanel:
             self.predict(values, self.classifier_models)
 
     def predict(self, values, models_dict):
+        self.button_result_pressed = True
         for model_name in models_dict:
                 model = models_dict[model_name]
                 prediction = model.predict([values])

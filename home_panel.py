@@ -7,7 +7,7 @@ class HomePanel:
         self.window = window
         self.window_self = self_window
         self.panel = tk.Frame(self.window)
-        self.lblTitle = tk.Label(self.panel, text="Proyecto Algoritmica", bg="white", fg="black", font="none 12 bold")
+        self.lblTitle = tk.Label(self.panel, text="Master Mind", bg="white", fg="black", font="none 12 bold")
         self.btnSelectFile = tk.Button(self.panel, text="Seleccionar archivo", command=self.open_file_chooser)
         self.lblTitle.pack()
         self.btnSelectFile.pack()
