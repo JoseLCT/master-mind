@@ -1,3 +1,3 @@
 # MasterMind
 
-2023 - 1
+Algorítmica Avanzada, 2023-1
